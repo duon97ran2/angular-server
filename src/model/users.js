@@ -20,7 +20,7 @@ const userSchema = mongoose.Schema({
     type: Number,
     default: 0
   }
-})
+}, { timestamps: true })
 
 userSchema.methods = {
   authenticate(password) {

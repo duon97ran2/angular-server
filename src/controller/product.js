@@ -27,7 +27,7 @@ module.exports = {
   },
   list: async (req, res) => {
     try {
-      const product = await Product.find().exec();
+      const product = await Product.find().populate("category").exec();
       res.status(201).json(product);
     } catch (error) {
       res.status(500).json("Lấy danh sách sản phẩm thất bại")
