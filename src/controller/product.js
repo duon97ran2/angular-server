@@ -41,4 +41,12 @@ module.exports = {
       res.status(500).json("Lấy danh sách sản phẩm thất bại")
     }
   },
+  getByCategory: async (req, res) => {
+    try {
+      const product = await Product.find({ category: req.params.id }).populate("category").exec();
+      res.status(201).json(product);
+    } catch (error) {
+      res.status(500).json("Lấy danh sách sản phẩm thất bại")
+    }
+  }
 }

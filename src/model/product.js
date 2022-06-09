@@ -34,6 +34,10 @@ const productSchema = mongoose.Schema(
     author: {
       type: String,
       required: true
+    },
+    status: {
+      type: String,
+      default: 0
     }
 
   }, { timestamps: true }

@@ -19,6 +19,13 @@ const userSchema = mongoose.Schema({
   role: {
     type: Number,
     default: 0
+  },
+  username: {
+    type: String
+  },
+  status: {
+    type: Number,
+    default: 0
   }
 }, { timestamps: true })
 

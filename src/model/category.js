@@ -7,6 +7,10 @@ const categorySchema = mongoose.Schema({
   },
   thumbnail: {
     type: String
+  },
+  status: {
+    type: Number,
+    default: 0
   }
 }, { timestamps: true })
 

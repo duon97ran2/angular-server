@@ -22,7 +22,7 @@ module.exports = {
       const category = await Category.findOne({ _id: req.params.id }).exec();
       res.status(200).json(category);
     } catch (error) {
-      res.status(500).json("Lấy thông tin danh mục thất bại");
+      res.status(500).json(error);
     }
   },
   remove: async (req, res) => {
