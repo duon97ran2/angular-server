@@ -36,7 +36,7 @@ const productSchema = mongoose.Schema(
       required: true
     },
     status: {
-      type: String,
+      type: Number,
       default: 0
     }
 

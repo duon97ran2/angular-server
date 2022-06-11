@@ -30,6 +30,16 @@ module.exports = {
       res.status(500).json("Cập nhật thất bại")
     }
   },
+  create: async (req, res) => {
+    try {
+      const existEmail = await User.findOne({ email: req.body.email }).exec();
+      if (existEmail) return res.status(500).json("Tài khoản sử dụng email này đã tồn tại");
+      const users = await new User(req.body).save();
+      res.status(200).json(users)
+    } catch (error) {
+      res.status(500).json("Tạo người dùng thất bại")
+    }
+  },
   list: async (req, res) => {
     try {
       const users = await User.find().exec();

@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minLength: 6,
+    minLength: 5,
     maxLength: 12
   },
   salt: {
@@ -19,6 +19,10 @@ const userSchema = mongoose.Schema({
   role: {
     type: Number,
     default: 0
+  },
+  avatar: {
+    type: Array,
+    default: ['https://mdbootstrap.com/img/new/avatars/1.webp']
   },
   username: {
     type: String
