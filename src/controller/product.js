@@ -33,6 +33,15 @@ module.exports = {
       res.status(500).json("Lấy danh sách sản phẩm thất bại")
     }
   },
+  listHome: async (req, res) => {
+    try {
+      const product = await Product.find().populate("category").limit(8).exec();
+      const saleProduct = await Product.find({ status: 0, newPrice: { $ne: 0 } }).populate("category").exec();
+      res.status(201).json({ product, saleProduct });
+    } catch (error) {
+      res.status(500).json("Lấy danh sách sản phẩm thất bại")
+    }
+  },
   detail: async (req, res) => {
     try {
       const product = await Product.findOne({ _id: req.params.id }).exec();
