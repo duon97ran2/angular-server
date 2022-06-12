@@ -57,5 +57,14 @@ module.exports = {
     } catch (error) {
       res.status(500).json("Lấy danh sách sản phẩm thất bại")
     }
+  },
+  search: async (req, res) => {
+    try {
+      const query = req.query.q;
+      const result = await Product.find({ name: { $regex: new RegExp(query), $options: "i" } }).populate("category").exec()
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json("Không tìm thấy kết quả")
+    }
   }
 }
