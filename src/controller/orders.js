@@ -17,6 +17,14 @@ module.exports = {
       res.status(500).json("Lấy danh sách thất bại")
     }
   },
+  cancelList: async (req, res) => {
+    try {
+      const order = await Orders.find({ status: 4 }).exec();
+      res.status(200).json(order);
+    } catch (error) {
+      res.status(500).json("Lấy danh sách thất bại")
+    }
+  },
   update: async (req, res) => {
     try {
       const order = await Orders.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }).exec();
