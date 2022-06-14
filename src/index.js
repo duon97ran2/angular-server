@@ -9,6 +9,7 @@ const streamifier = require("streamifier");
 const productRouter = require("./router/product");
 const userRouter = require("./router/users");
 const categoryRouter = require("./router/category");
+const orderRouter = require("./router/orders");
 
 
 const app = express();
@@ -27,6 +28,7 @@ cloudinary.config({
 });
 app.use("/api", productRouter);
 app.use("/api", userRouter);
+app.use("/api", orderRouter);
 app.use("/api", categoryRouter);
 app.post('/api/upload', fileUpload.array('image', 5), function (req, res, next) {
   let streamUpload = (file) => {
