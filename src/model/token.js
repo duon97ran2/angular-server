@@ -4,7 +4,9 @@ const tokenSchema = mongoose.Schema({
   orderId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Orders",
-    required: true
+  },
+  email: {
+    type: String,
   },
   token: {
     type: String,

@@ -41,6 +41,30 @@ module.exports = {
       res.status(500).json("Lấy danh sách thất bại")
     }
   },
+  emailVerify: async (req, res) => {
+    try {
+      const existOrders = await Orders.find({ email: req.body.email }).exec();
+      if (!existOrders.length) return res.status(400).json("Khồng tồn tại đơn hàng nào của email này");
+      const code = Math.random().toString(16).substr(2, 8);
+      const token = await new Token({ token: code, email: req.body.email }).save();
+      await sendEmail(req.body.email, "Xác nhận email", `Mã xác nhận của bạn: ${code}`);
+      res.status(200).json({ email: req.body.email });
+    } catch (error) {
+      res.status(200).json(error);
+    }
+  },
+  codeVerify: async (req, res) => {
+    try {
+      const token = await Token.findOne({ token: req.body.code }).exec();
+      if (!token) return res.status(400).send("Mã xác nhận không đúng hoặc đã hết hạn");
+      const orders = await Orders.find({ email: token.email }).exec();
+      await Token.findOneAndDelete({ _id: token._id }).exec();
+      res.status(200).json(orders);
+    } catch (error) {
+      console.log(error)
+      res.status(500).json(error)
+    }
+  },
   cancelList: async (req, res) => {
     try {
       const order = await Orders.find({ status: 4 }).exec();
