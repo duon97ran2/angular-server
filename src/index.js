@@ -10,6 +10,7 @@ const productRouter = require("./router/product");
 const userRouter = require("./router/users");
 const categoryRouter = require("./router/category");
 const orderRouter = require("./router/orders");
+const couponRouter = require("./router/coupon");
 
 
 const app = express();
@@ -30,6 +31,7 @@ app.use("/api", productRouter);
 app.use("/api", userRouter);
 app.use("/api", orderRouter);
 app.use("/api", categoryRouter);
+app.use("/api", couponRouter);
 app.post('/api/upload', fileUpload.array('image', 5), function (req, res, next) {
   let streamUpload = (file) => {
     return new Promise((resolve, reject) => {

@@ -68,6 +68,10 @@ const orderSchema = mongoose.Schema({
     type: Number,
     required: true
   },
+  amount_off: {
+    type: Number,
+    default: 0
+  },
   shipping: {
     type: Number,
     required: true

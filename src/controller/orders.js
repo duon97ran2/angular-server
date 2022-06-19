@@ -1,5 +1,6 @@
 const Orders = require("../model/orders");
-const Token = require("../model/token")
+const Token = require("../model/token");
+const Coupon = require("../model/coupon")
 const crypto = require("crypto");
 const sendEmail = require("../utils/email")
 
@@ -12,6 +13,10 @@ module.exports = {
         token: crypto.randomBytes(32).toString("hex")
       }).save();
       const message = `Cảm ơn bạn đã đặt hàng. Truy cập đường link này để xác nhận đơn:  ${process.env.CLIENT_URL}/verify/${order._id}/${token.token} `;
+      const coupon = await Coupon.findOne({ _id: req.body.couponId });
+      if (coupon) {
+        await Coupon.findOneAndUpdate({ _id: coupon._id }, { redeem_times: coupon.redeem_times - 1, valid_users: coupon.valid_users.filter(user => user.userId != req.body.userId) }).exec();
+      }
       await sendEmail(order.email, "Xác nhận đặt hàng", message);
       res.status(200).json(order);
     } catch (error) {
