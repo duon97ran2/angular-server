@@ -17,7 +17,7 @@ module.exports = {
       if (coupon) {
         await Coupon.findOneAndUpdate({ _id: coupon._id }, { redeem_times: coupon.redeem_times - 1, valid_users: coupon.valid_users.filter(user => user.userId != req.body.userId) }).exec();
       }
-      await sendEmail(order.email, "Xác nhận đặt hàng", message);
+      sendEmail(order.email, "Xác nhận đặt hàng", message, order.products);
       res.status(200).json(order);
     } catch (error) {
       console.log(error)
@@ -52,7 +52,7 @@ module.exports = {
       if (!existOrders.length) return res.status(400).json("Khồng tồn tại đơn hàng nào của email này");
       const code = Math.random().toString(16).substr(2, 8);
       const token = await new Token({ token: code, email: req.body.email }).save();
-      await sendEmail(req.body.email, "Xác nhận email", `Mã xác nhận của bạn: ${code}`);
+      sendEmail(req.body.email, "Xác nhận email", `Mã xác nhận của bạn: ${code}`);
       res.status(200).json({ email: req.body.email });
     } catch (error) {
       res.status(200).json(error);

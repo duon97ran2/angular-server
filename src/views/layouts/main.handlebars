@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Example App</title>
+  <style>
+    table {
+      width: 100%;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid lightgrey;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 2px 4px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <p>{{text}}
+  <p>
+    {{#if products.length}}
+  <h3>Thông tin đơn hàng</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#products}}
+      <tr>
+        <td>{{name}}</td>
+        {{#if newPrice}}
+        <td>{{multiply newPrice quantity}}</td>
+        {{else}}
+        <td>{{multiply price quantity}}</td>
+        {{/if}}
+        <td>{{quantity}}</td>
+        <td><img src="{{image.[0]}}" width="100px" alt=""></td>
+      </tr>
+      {{/products}}
+    </tbody>
+
+
+  </table>
+  {{/if}}
+
+</body>
+
+</html>
