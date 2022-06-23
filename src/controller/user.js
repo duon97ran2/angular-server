@@ -80,6 +80,30 @@ module.exports = {
       res.status(500).json("Xóa người dùng thất bại")
     }
   },
+  checkPassword: async (req, res) => {
+    try {
+      const user = await User.findOne({ _id: req.params.id }).exec();
+      if (!user) return res.status(400).json("Tài khoản không tồn tại hoặc chưa được kích hoạt")
+      if (!user.authenticate(req.body.password)) return res.status(400).json("Mật khẩu không chính xác");
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(500).json("Kiểm tra mật khẩu thất bại")
+    }
+  },
+  updatePassword: async (req, res) => {
+    try {
+      const user = await User.findOne({ _id: req.params.id }).exec();
+      if (user.authenticate(req.body.newPassword)) return res.status(400).json("Mật khẩu mới không được trùng với mật khẩu cũ");
+      const hashPassword = user.passwordEncode(req.body.newPassword);
+      await User.findOneAndUpdate({ _id: req.params.id }, { password: hashPassword }, { new: true }).exec();
+      user.password = null;
+      res.status(200).json(user);
+    } catch (error) {
+      console.log(error)
+      res.status(500).json("Đổi mật khẩu thất bại")
+    }
+  },
+
   detail: async (req, res) => {
     try {
       const users = await User.findOne({ _id: req.params.id }).exec();

@@ -54,7 +54,10 @@ module.exports = {
         }
       }
       if (req.query.category) {
-        filter.category = JSON.parse(req.query.category);
+        const condition = JSON.parse(req.query.category);
+        if (condition) {
+          filter.category = condition;
+        }
       }
       const product = await Product.find(filter).sort(sort).populate("category").exec();
       res.status(201).json(product);
