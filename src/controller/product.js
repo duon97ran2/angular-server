@@ -27,9 +27,39 @@ module.exports = {
   },
   list: async (req, res) => {
     try {
-      const product = await Product.find().populate("category").exec();
+      const filter = {};
+      const sort = {};
+      if (req.query.sort) {
+        if (req.query.sort == "date-new") {
+          sort.createdAt = -1;
+        }
+        else if (req.query.sort == "date-old") {
+          sort.createdAt = 1;
+        }
+        else if (req.query.sort == "price-asc") {
+          sort.newPrice = 1;
+
+        }
+        else if (req.query.sort == "price-desc") {
+          sort.newPrice = -1;
+        }
+      }
+      if (req.query.price_range) {
+        if (req.query.price_range == "50000-to-100000") {
+          filter.newPrice = { $gte: 50000, $lte: 100000 };
+        } else if (req.query.price_range == "over-100000") {
+          filter.newPrice = { $gt: 100000 };
+        } else if (req.query.price_range == "under-50000") {
+          filter.newPrice = { $lt: 50000 };
+        }
+      }
+      if (req.query.category) {
+        filter.category = JSON.parse(req.query.category);
+      }
+      const product = await Product.find(filter).sort(sort).populate("category").exec();
       res.status(201).json(product);
     } catch (error) {
+      console.log(error)
       res.status(500).json("Lấy danh sách sản phẩm thất bại")
     }
   },
@@ -66,5 +96,5 @@ module.exports = {
     } catch (error) {
       res.status(500).json("Không tìm thấy kết quả")
     }
-  }
+  },
 }
