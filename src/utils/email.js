@@ -14,11 +14,11 @@ const options = {
       allowProtoPropertiesByDefault: true,
       allowProtoMethodsByDefault: true
     },
-    layoutsDir: path.resolve(".src/views/layout"),
+    layoutsDir: path.resolve("src/views/layouts"),
     defaultLayout: false,
-    partialsDir: path.resolve(".src/views/layout"),
+    partialsDir: path.resolve("src/views/layouts"),
   },
-  viewPath: path.resolve(".src/views/layout"),
+  viewPath: path.resolve("src/views/layouts"),
   extName: '.handlebars',
 
 }
