@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer")
+const path = require("path")
 const hbs = require("nodemailer-express-handlebars")
 var handlebars = require('handlebars');
 var helpers = require('handlebars-helpers');
@@ -13,11 +14,11 @@ const options = {
       allowProtoPropertiesByDefault: true,
       allowProtoMethodsByDefault: true
     },
-    layoutsDir: "src/views/layouts/",
+    layoutsDir: path.resolve(".src/views/layout"),
     defaultLayout: false,
-    partialsDir: "src/views/layouts/",
+    partialsDir: path.resolve(".src/views/layout"),
   },
-  viewPath: "src/views/layouts",
+  viewPath: path.resolve(".src/views/layout"),
   extName: '.handlebars',
 
 }
