@@ -20,7 +20,7 @@ const productSchema = mongoose.Schema(
     },
     stock: {
       type: Number,
-      required: true
+      // required: true
     },
     description: {
       type: String,
@@ -33,7 +33,13 @@ const productSchema = mongoose.Schema(
     },
     author: {
       type: String,
-      required: true
+      // required: true
+    },
+    feature: {
+      type: String
+    },
+    shortDescription: {
+      type: String
     },
     status: {
       type: Number,
