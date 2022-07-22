@@ -4,7 +4,7 @@ module.exports = {
   create: async (req, res) => {
     try {
       const product = await new Product(req.body).save();
-      res.status(201).json(product)
+      res.status(201).json(product.populate("category"))
     } catch (error) {
       res.status(500).json("Thêm sản phẩm thất bại");
     }
@@ -19,7 +19,7 @@ module.exports = {
   },
   update: async (req, res) => {
     try {
-      const product = await Product.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true }).exec();
+      const product = await Product.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true }).populate("category").exec();
       res.status(201).json(product);
     } catch (error) {
       res.status(500).json("Cập nhật sản phẩm thất bại")
