@@ -4,7 +4,8 @@ module.exports = {
   create: async (req, res) => {
     try {
       const product = await new Product(req.body).save();
-      res.status(201).json(product.populate("category"))
+      const populateProduct = await product.populate("category")
+      res.status(201).json(populateProduct)
     } catch (error) {
       res.status(500).json("Thêm sản phẩm thất bại");
     }
