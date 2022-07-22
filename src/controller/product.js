@@ -53,13 +53,18 @@ module.exports = {
           filter.newPrice = { $lt: 50000 };
         }
       }
+      if (req.query.status) {
+        if (req.query.status == "1") {
+
+        }
+      }
       if (req.query.category) {
         const condition = JSON.parse(req.query.category);
         if (condition) {
           filter.category = condition;
         }
       }
-      const product = await Product.find(filter).sort(sort).populate("category").exec();
+      const product = await Product.find(filter).sort(sort).populate({ path: "category", match: { status: 1 } }).exec();
       res.status(201).json(product);
     } catch (error) {
       console.log(error)
