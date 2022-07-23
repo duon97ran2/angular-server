@@ -16,7 +16,7 @@ const categorySchema = mongoose.Schema({
   ,
   icon: {
     type: String,
-    default: "AiOutlineSetting"
+    default: "<AiOutlineSetting/>"
   }
 }, { timestamps: true })
 
