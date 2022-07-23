@@ -13,6 +13,11 @@ const categorySchema = mongoose.Schema({
     type: Number,
     default: 0
   }
+  ,
+  icon: {
+    type: PerformanceServerTiming,
+    default: "AiOutlineSetting"
+  }
 }, { timestamps: true })
 
 // categorySchema.pre("findOneAndDelete", async function (data) {
