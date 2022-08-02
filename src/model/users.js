@@ -24,6 +24,9 @@ const userSchema = mongoose.Schema({
     type: Array,
     default: ['https://mdbootstrap.com/img/new/avatars/1.webp']
   },
+  phone: {
+    type: String,
+  },
   username: {
     type: String
   },
