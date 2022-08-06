@@ -37,7 +37,8 @@ module.exports = {
   },
   login: async (req, res) => {
     try {
-      const user = await User.findOne({ email: req.body.email, status: 0 }).exec();
+      // const user = await User.findOne({ email: req.body.email, status: 0 }).exec();
+      const user = await User.findOne({ email: req.body.email }).exec();
       if (!user) return res.status(400).json("Email không tồn tại hoặc chưa được kích hoạt")
       if (!user.authenticate(req.body.password)) return res.status(400).json("Password không chính xác")
       user.password = null;
