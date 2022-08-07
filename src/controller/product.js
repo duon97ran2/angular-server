@@ -29,7 +29,7 @@ module.exports = {
   list: async (req, res) => {
     try {
       const filter = {};
-      const sort = {};
+      const sort = { createdAt: -1 };
       if (req.query.sort) {
         if (req.query.sort == "date-new") {
           sort.createdAt = -1;
@@ -76,7 +76,7 @@ module.exports = {
   },
   listHome: async (req, res) => {
     try {
-      const product = await Product.find().populate("category").limit(8).exec();
+      const product = await Product.find({ status: 0 }).populate("category").limit(10).exec();
       const saleProduct = await Product.find({ status: 0, newPrice: { $ne: 0 } }).populate("category").exec();
       res.status(201).json({ product, saleProduct });
     } catch (error) {
