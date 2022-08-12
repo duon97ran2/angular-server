@@ -78,6 +78,8 @@ const orderSchema = mongoose.Schema({
   shipping: {
     type: Number,
     required: true
+  }, note: {
+    type: String,
   }
 }, { timestamps: true })
 
