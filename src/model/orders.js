@@ -16,30 +16,33 @@ const orderSchema = mongoose.Schema({
       },
       newPrice: {
         type: Number,
-        default: 0
+        // default: 0
       },
       stock: {
         type: Number,
-        required: true
+        // required: true
       },
       description: {
         type: String,
-        default: "No description"
+        // default: "No description"
       },
       category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
-        required: true,
+        // required: true,
       },
       author: {
         type: String,
-        required: true
+        // required: true
       },
       status: {
         type: Number,
-        default: 0
+        // default: 0
       },
       quantity: {
+        type: Number
+      },
+      amount: {
         type: Number
       }
     }
