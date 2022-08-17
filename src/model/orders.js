@@ -41,9 +41,6 @@ const orderSchema = mongoose.Schema({
       },
       quantity: {
         type: Number
-      },
-      amount: {
-        type: Number
       }
     }
   ],
@@ -79,6 +76,8 @@ const orderSchema = mongoose.Schema({
     type: Number,
     required: true
   }, note: {
+    type: String,
+  }, orderCode: {
     type: String,
   }
 }, { timestamps: true })

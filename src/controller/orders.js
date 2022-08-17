@@ -13,9 +13,11 @@ module.exports = {
         token: crypto.randomBytes(32).toString("hex")
       }).save();
       const message = `Cảm ơn bạn đã đặt hàng. Truy cập đường link này để xác nhận đơn:  ${process.env.CLIENT_URL}/verify/${order._id}/${token.token}/order `;
-      const coupon = await Coupon.findOne({ _id: req.body.couponId });
-      if (coupon) {
-        await Coupon.findOneAndUpdate({ _id: coupon._id }, { redeem_times: coupon.redeem_times - 1, valid_users: coupon.valid_users.filter(user => user.userId != req.body.userId) }).exec();
+      if (req.body.couponId) {
+        const coupon = await Coupon.findOne({ _id: req.body.couponId });
+        if (coupon) {
+          await Coupon.findOneAndUpdate({ _id: coupon._id }, { redeem_times: coupon.redeem_times - 1, valid_users: coupon.valid_users.filter(user => user.userId != req.body.userId) }).exec();
+        }
       }
       sendEmail(order.email, "Xác nhận đặt hàng", message, order.products);
       res.status(200).json(order);
@@ -40,7 +42,7 @@ module.exports = {
   },
   list: async (req, res) => {
     try {
-      const order = await Orders.find({ status: { $ne: 4 } }).exec();
+      const order = await Orders.find({ status: { $ne: 4 } }).sort({ createdAt: -1 }).exec();
       res.status(200).json(order);
     } catch (error) {
       res.status(500).json("Lấy danh sách thất bại")
@@ -62,7 +64,7 @@ module.exports = {
     try {
       const token = await Token.findOne({ token: req.body.code }).exec();
       if (!token) return res.status(400).send("Mã xác nhận không đúng hoặc đã hết hạn");
-      const orders = await Orders.find({ email: token.email }).exec();
+      const orders = await Orders.find({ email: token.email }).sort({ createdAt: -1 }).exec();
       await Token.findOneAndDelete({ _id: token._id }).exec();
       res.status(200).json(orders);
     } catch (error) {
@@ -72,7 +74,7 @@ module.exports = {
   },
   cancelList: async (req, res) => {
     try {
-      const order = await Orders.find({ status: 4 }).exec();
+      const order = await Orders.find({ status: 4 }).sort({ createdAt: -1 }).exec();
       res.status(200).json(order);
     } catch (error) {
       res.status(500).json("Lấy danh sách thất bại")
